@@ -108,6 +108,18 @@ const FileController = {
         return res.status(400).json({ success: false, message: 'Invalid token payload' });
       }
 
+      // Check if it's an S3 link
+      if (filePath.startsWith('s3://')) {
+        const FileUploadUtils = require('../../utils/file-upload');
+        const signedUrl = await FileUploadUtils.getSignedDownloadUrl(filePath);
+        if (signedUrl) {
+          return res.redirect(signedUrl); // Redirect customer to AWS S3 signed link
+        } else {
+          return res.status(500).json({ success: false, message: 'Failed to generate download link' });
+        }
+      }
+
+      // Local Fallback
       const safePath = path.resolve(__dirname, '../../../uploads', filePath);
       if (!safePath.startsWith(path.resolve(__dirname, '../../../uploads'))) {
         return res.status(403).json({ success: false, message: 'Access denied' });
