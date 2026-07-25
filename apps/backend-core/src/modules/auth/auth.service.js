@@ -10,7 +10,7 @@ const UserRepository = require("../user/user.repository");
 const PasswordResetRepository = require("../user/password-reset.repository");
 const RefreshTokenRepository = require("./refresh-token.repository");
 const EmailVerificationRepository = require("./email-verification.repository");
-const { sendResetPasswordEmail, sendEmailVerification } = require("../../utils/mailer");
+const { MailQueueService } = require("../../queues/mail.queue");
 const TOKEN_CONFIG = {
   accessExpires: process.env.ACCESS_TOKEN_EXPIRES || '15m',
   refreshExpiresDays: Number(process.env.REFRESH_TOKEN_DAYS) || 30
@@ -124,8 +124,8 @@ const AuthService = {
 
     await PasswordResetRepository.createToken(user.id, tokenHash, expiresAt);
 
-    // send email (do not await to avoid leaking timing? we await to catch errors)
-    await sendResetPasswordEmail(user.email, token);
+    // push to queue instead of waiting
+    MailQueueService.enqueueResetPassword(user.email, token).catch(err => console.error("Email queue failed:", err));
   },
 
   /**
@@ -231,7 +231,7 @@ const AuthService = {
     await EmailVerificationRepository.deleteByUserId(user.id);
     await EmailVerificationRepository.createToken(user.id, tokenHash, expiresAt);
 
-    await sendEmailVerification(user.email, tokenRaw);
+    MailQueueService.enqueueEmailVerification(user.email, tokenRaw).catch(err => console.error("Email queue failed:", err));
   },
 
   async verifyEmail(tokenRaw) {

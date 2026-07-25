@@ -15,6 +15,16 @@ services:
     networks:
       - crm_network
 
+  redis:
+    image: redis:7-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - crm_network
+
   backend:
     build:
       context: ./apps/backend-core
@@ -23,6 +33,7 @@ services:
       - "5000:3000"
     environment:
       - DATABASE_URL=postgresql://postgres:rootpassword@db:5432/ecom_crm?schema=public
+      - REDIS_URL=redis://redis:6379
       - PORT=3000
       - JWT_SECRET=production_secret_key_change_this
       # AWS S3 Settings
@@ -30,6 +41,8 @@ services:
       - AWS_ACCESS_KEY_ID=your_access_key
       - AWS_SECRET_ACCESS_KEY=your_secret_key
       - AWS_S3_BUCKET_NAME=crm-digital-products
+      # Cloudinary Settings
+      - CLOUDINARY_URL=cloudinary://your_api_key:your_api_secret@your_cloud_name
       # VNPay Settings
       - VNP_TMN_CODE=your_tmn_code
       - VNP_HASH_SECRET=your_hash_secret
@@ -37,6 +50,7 @@ services:
       - VNP_RETURN_URL=http://localhost:5000/api/payment/vnpay-return
     depends_on:
       - db
+      - redis
     networks:
       - crm_network
 
@@ -82,6 +96,7 @@ services:
 
 volumes:
   db_data:
+  redis_data:
 
 networks:
   crm_network:
