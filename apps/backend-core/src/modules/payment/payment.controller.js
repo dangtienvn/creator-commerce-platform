@@ -3,7 +3,7 @@ const StripeService = require("../../shared/stripe.service");
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const ResponseHelper = require("../../utils/response.helper");
-const { sendInvoiceEmail } = require("../../utils/mailer");
+const { MailQueueService } = require("../../queues/mail.queue");
 
 const PaymentController = {
   async createPaymentUrl(req, res, next) {
@@ -31,6 +31,12 @@ const PaymentController = {
           const orderId = parseInt(vnpayResult.orderId, 10);
           if (!isNaN(orderId)) {
             await prisma.$transaction(async (tx) => {
+              // Check if order is already paid to prevent race conditions
+              const existingOrder = await tx.orders.findUnique({ where: { id: orderId } });
+              if (existingOrder && existingOrder.status === 'paid') {
+                return; // Already processed
+              }
+
               const order = await tx.orders.update({
                 where: { id: orderId },
                 data: {
@@ -78,8 +84,8 @@ const PaymentController = {
                     payment_method: 'vnpay',
                     items: order.order_items.map(i => ({ name: i.product_name, quantity: i.quantity, price: i.price }))
                   };
-                  // Không dùng await để tránh block webhook
-                  sendInvoiceEmail(order.users_orders_customer_idTousers.email, orderDetails).catch(err => console.error("Email send failed:", err));
+                  // Push to background queue instead of blocking webhook
+                  MailQueueService.enqueueInvoiceEmail(order.users_orders_customer_idTousers.email, orderDetails).catch(err => console.error("Email queue failed:", err));
                 }
               }
             });
@@ -148,6 +154,12 @@ const PaymentController = {
         
         if (!isNaN(orderId)) {
           await prisma.$transaction(async (tx) => {
+            // Check if order is already paid to prevent race conditions
+            const existingOrder = await tx.orders.findUnique({ where: { id: orderId } });
+            if (existingOrder && existingOrder.status === 'paid') {
+              return; // Already processed
+            }
+
             const order = await tx.orders.update({
               where: { id: orderId },
               data: {
@@ -195,7 +207,7 @@ const PaymentController = {
                   payment_method: 'stripe',
                   items: order.order_items.map(i => ({ name: i.product_name, quantity: i.quantity, price: i.price }))
                 };
-                sendInvoiceEmail(order.users_orders_customer_idTousers.email, orderDetails).catch(err => console.error("Email send failed:", err));
+                MailQueueService.enqueueInvoiceEmail(order.users_orders_customer_idTousers.email, orderDetails).catch(err => console.error("Email queue failed:", err));
               }
             }
           });

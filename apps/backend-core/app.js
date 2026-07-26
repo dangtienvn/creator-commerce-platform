@@ -26,6 +26,9 @@ app.set("trust proxy", 1);
 // Khởi chạy dọn rác tự động (cron job xoá dữ liệu thùng rác cũ)
 TrashService.init();
 
+// Khởi chạy Mail Worker để xử lý gửi email dưới nền
+require('./src/queues/mail.worker');
+
 // Kết nối với cơ sở dữ liệu Prisma/PostgreSQL
 connectDB();
 
@@ -42,6 +45,9 @@ app.use(cors({
   },
   credentials: true
 }));
+
+// Webhook route requires raw body, must be before express.json()
+app.use("/api/payment", require("./src/modules/payment/payment.route"));
 
 app.use(express.json());
 app.use(cookieParser());
@@ -68,7 +74,6 @@ app.use("/api/expenses", require("./src/modules/expense/expense.route"));
 app.use("/api/vouchers", require("./src/modules/voucher/voucher.route"));
 app.use("/api/tickets", require("./src/modules/ticket/ticket.route"));
 app.use("/api/cart", require("./src/modules/cart/cart.routes"));
-app.use("/api/payment", require("./src/modules/payment/payment.route"));
 app.use("/api/posts", require("./src/modules/post/post.route"));
 app.use("/api/post-comments", require("./src/modules/post_comment/post_comment.route"));
 app.use("/api/post-categories", require("./src/modules/post_category/post_category.route"));
