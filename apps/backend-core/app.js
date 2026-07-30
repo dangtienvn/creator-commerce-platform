@@ -4,6 +4,8 @@
  */
 
 const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
 const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -20,6 +22,7 @@ const logger = require('./src/utils/logger');
 const cookieParser = require('cookie-parser');
 
 const app = express();
+const server = http.createServer(app);
 // Tin tưởng proxy để lấy IP chính xác khi dùng Nginx/Render/Heroku
 app.set("trust proxy", 1);
 
@@ -34,6 +37,35 @@ connectDB();
 
 // Lấy danh sách các domain được phép gọi API (nếu có)
 const allowedOrigins = process.env.FRONTEND_URLS ? process.env.FRONTEND_URLS.split(",") : ["http://localhost:3000", "http://localhost:3001", "http://localhost:3002", "http://localhost:3003", "http://localhost:5173"];
+
+// Khởi tạo Socket.IO
+const io = new Server(server, {
+  cors: {
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes("*")) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true
+  }
+});
+
+// Lắng nghe sự kiện kết nối socket
+io.on("connection", (socket) => {
+  logger.info(`Socket connected: ${socket.id}`);
+  
+  socket.on("disconnect", () => {
+    logger.info(`Socket disconnected: ${socket.id}`);
+  });
+});
+
+// Đính kèm 'io' vào 'req' để có thể gọi io.emit() ở bất kì controller nào
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -86,7 +118,7 @@ app.get("/", (req, res) => {
 
 // port
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 }); 
 // error handler (last)
