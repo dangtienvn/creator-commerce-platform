@@ -2,6 +2,14 @@
 
 Tài liệu này ghi chú lại những thay đổi lớn (Major Updates) và các lần refactor hệ thống của dự án E-commerce Platform.
 
+## [2.0.0] - Tái cấu trúc Kiến trúc (Architectural Refactoring)
+
+### Ngày 19/08/2026
+- **Refactor (Monorepo):** Chuyển đổi toàn bộ cấu trúc dự án sang mô hình NPM Workspaces. Bổ sung thư mục `packages/` chứa các module chia sẻ (Shared Packages) như `database`, `ui`, `theme-engine`,... nhằm tăng khả năng tái sử dụng mã nguồn và tuân thủ nguyên tắc DRY.
+- **Refactor (Database):** Tách biệt toàn bộ cấu hình Prisma ORM và schema từ ứng dụng `backend-core` sang thành package độc lập `@repo/database`.
+- **Refactor (Frontend):** Loại bỏ `Digital Store` cũ, thay thế bằng ứng dụng `Storefront` mới. Cập nhật cơ chế định tuyến hỗ trợ Multi-tenant (subdomain routing).
+- **Remove:** Loại bỏ ứng dụng `Blog CMS` để tinh gọn và tập trung hệ sinh thái vào việc bán sản phẩm số.
+
 ## [1.1.0] - Giai đoạn Nâng Cấp Hệ Thống (Production Readiness)
 
 ### Ngày 26/07/2026
