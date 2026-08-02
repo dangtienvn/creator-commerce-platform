@@ -60,6 +60,12 @@ const OrderController = {
         req.body.user_id = req.user.id;
       }
       const bill = await OrderService.createOrder(req.body);
+      
+      // Bắn sự kiện Socket.io cho CRM biết có đơn hàng mới
+      if (req.io) {
+        req.io.emit('NEW_ORDER', bill);
+      }
+
       return ResponseHelper.created(res, bill);
     } catch (error) {
       next(error);
@@ -103,6 +109,12 @@ const OrderController = {
         billing_email: req.body?.billing_email,
         voucher_code: req.body?.voucher_code,
       });
+
+      // Bắn sự kiện Socket.io cho CRM biết có khách mới đặt hàng
+      if (req.io) {
+        req.io.emit('NEW_ORDER', bill);
+      }
+
       return ResponseHelper.created(res, bill);
     } catch (error) {
       next(error);

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "start:prod": "node app.js",
-    "dev": "concurrently \"nodemon app.js\" \"npm run dev:sync\"",
+    "dev": "nodemon app.js",
     "dev:sync": "browser-sync start --port 3001 --server \"../frontend\" --files \"../frontend/**/*\" --browser \"chrome\" --startPath \"/\"",
     "dev:all": "concurrently \"npm run dev\" \"npm run dev:sync\"",
     "seed:accounts": "node ./scripts/seed_accounts.js",
