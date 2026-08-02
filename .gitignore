@@ -128,4 +128,4 @@ dist
 docker-compose.override.yml
 
 # Scripts
-scripts/*
+scripts/
