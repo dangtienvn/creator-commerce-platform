@@ -3,12 +3,14 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { Eye, EyeOff } from 'lucide-react';
 import api from '../../../lib/api';
 import useAuthStore from '../../../store/useAuthStore';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -22,7 +24,7 @@ export default function LoginPage() {
     try {
       const response = await api.post('/auth/login', { email, password });
       if (response.success) {
-        const { token, user } = response.data;
+        const { token, user } = response;
         // Since api.js checks localStorage for token, we should store it there if needed, 
         // but useAuthStore is configured to persist. Let's just manually set it in localStorage for api.js to pick up.
         localStorage.setItem('token', token);
@@ -67,14 +69,23 @@ export default function LoginPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
-            <input
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 bg-white text-gray-900 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="••••••••"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-3 bg-white text-gray-900 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10"
+                placeholder="••••••••"
+              />
+              <button 
+                type="button" 
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
           </div>
 
           <button
