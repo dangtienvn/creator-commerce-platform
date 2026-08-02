@@ -126,3 +126,6 @@ dist
 
 # Docker
 docker-compose.override.yml
+
+# Scripts
+scripts/*
