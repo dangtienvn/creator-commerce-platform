@@ -33,7 +33,10 @@ api.interceptors.response.use(
           window.location.href = '/login';
         }
       } else {
-        toast.error(error.response.data?.message || 'An error occurred');
+        // Không hiển thị toast lỗi ở trang login để form tự xử lý
+        if (!error.config?.url?.includes('/auth/login')) {
+          toast.error(error.response.data?.message || 'Đã xảy ra lỗi');
+        }
       }
     } else {
       toast.error('Network Error');

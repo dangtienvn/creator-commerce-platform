@@ -15,9 +15,9 @@ export default function Profile() {
       // In a real app, you would have a /users/me endpoint.
       // Since it's an admin, we'll fetch the first admin user or based on token.
       // Here we assume the backend has an endpoint for me, or we decode the JWT.
-      const data = await api.get('/auth/me').catch(() => null);
-      if (data && data.user) {
-        setProfile(data.user);
+      const response = await api.get('/users/my-profile').catch(() => null);
+      if (response && response.data) {
+        setProfile(response.data);
       } else {
         // Fallback: fetch users and find admin
         const users = await api.get('/users');

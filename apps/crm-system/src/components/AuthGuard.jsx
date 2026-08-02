@@ -17,7 +17,7 @@ const AuthGuard = ({ children, allowedRoles = [] }) => {
       }
 
       try {
-        const response = await api.get('/users/profile');
+        const response = await api.get('/users/my-profile');
         if (response.success) {
           const userRole = response.data.role_name?.toLowerCase();
           

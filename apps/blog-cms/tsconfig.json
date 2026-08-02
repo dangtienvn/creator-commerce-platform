@@ -17,7 +17,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "plugins": [
       {
         "name": "next"
@@ -25,9 +25,15 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/components/*": ["./components/*"],
-      "@/app/*": ["./app/*"],
-      "@/*": ["./*"]
+      "@/components/*": [
+        "./components/*"
+      ],
+      "@/app/*": [
+        "./app/*"
+      ],
+      "@/*": [
+        "./*"
+      ]
     }
   },
   "include": [

@@ -51,10 +51,10 @@ export default async function Home() {
             <h1 className="text-4xl md:text-5xl font-black text-slate-900 leading-tight mb-5">
               Kiến thức{" "}
               <span className="text-teal-600">thực chiến</span>{" "}
-              cho Developer Việt
+              cho Developer 
             </h1>
             <p className="text-lg text-slate-600 leading-relaxed max-w-xl mb-8">
-              Chia sẻ những gì mình học được qua thực tế: JavaScript ecosystem, Microservices, System Design, và DevOps từ A→Z.
+              Chia sẻ những gì mình học được qua thực tế: Fullstack Web, System Design và nhiều kiến thức khác nữa.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
@@ -64,7 +64,7 @@ export default async function Home() {
                 Đọc bài viết <ArrowRight className="w-4 h-4" />
               </Link>
               <a
-                href={process.env.NEXT_PUBLIC_STORE_URL || "http://localhost:3002"}
+                href={process.env.NEXT_PUBLIC_STORE_URL || "http://localhost:3003"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-slate-700 font-semibold px-6 py-3 rounded-xl border border-slate-200 transition-colors"
