@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const path = require('path');
+const FileUploadUtils = require('../../utils/file-upload');
 
 const FileController = {
   /**
@@ -9,7 +10,6 @@ const FileController = {
    */
   async upload(req, res, next) {
     try {
-      const FileUploadUtils = require('../../utils/file-upload');
       const uploadedUrls = [];
 
       if (req.files && req.files.length) {
@@ -70,7 +70,6 @@ const FileController = {
         return res.status(400).json({ success: false, message: 'Missing image URL(s)' });
       }
 
-      const FileUploadUtils = require('../../utils/file-upload');
       const results = [];
       for (const target of targets) {
         const deleted = await FileUploadUtils.deleteImage(target);
@@ -110,7 +109,6 @@ const FileController = {
 
       // Check if it's an S3 link
       if (filePath.startsWith('s3://')) {
-        const FileUploadUtils = require('../../utils/file-upload');
         const signedUrl = await FileUploadUtils.getSignedDownloadUrl(filePath);
         if (signedUrl) {
           return res.redirect(signedUrl); // Redirect customer to AWS S3 signed link
