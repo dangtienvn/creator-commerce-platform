@@ -4,6 +4,8 @@ import PromotionalAds from '../components/PromotionalAds';
 import LatestReviews from '../components/LatestReviews';
 import api from '../lib/api';
 
+export const dynamic = 'force-dynamic';
+
 // Fetch products from Backend-core
 async function getProducts() {
   try {

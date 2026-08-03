@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { ChevronRight, ArrowLeft } from 'lucide-react';
 import AddToCartButton from './AddToCartButton';
 
+export const dynamic = 'force-dynamic';
+
 async function getProduct(id) {
   try {
     const res = await fetch(`http://localhost:5000/api/products/${id}`, { cache: 'no-store' });
