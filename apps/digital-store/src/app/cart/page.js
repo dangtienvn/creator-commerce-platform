@@ -15,7 +15,7 @@ export default function CartPage() {
             <ShoppingCart size={40} />
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Your cart is empty</h1>
-          <p className="text-gray-500 mb-8">Looks like you haven't added any digital products to your cart yet.</p>
+          <p className="text-gray-500 mb-8">Looks like you haven&apos;t added any digital products to your cart yet.</p>
           <Link href="/" className="inline-block bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors">
             Start Shopping
           </Link>

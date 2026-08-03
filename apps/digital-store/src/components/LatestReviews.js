@@ -65,7 +65,7 @@ export default function LatestReviews() {
                   <Star key={i} size={16} fill={i < review.rating ? "currentColor" : "none"} strokeWidth={i < review.rating ? 0 : 1.5} className={i >= review.rating ? "text-gray-300" : ""} />
                 ))}
               </div>
-              <p className="text-gray-700 mb-8 flex-grow leading-relaxed">"{review.comment}"</p>
+              <p className="text-gray-700 mb-8 flex-grow leading-relaxed">&quot;{review.comment}&quot;</p>
               
               <div className="flex items-center gap-4 mt-auto pt-6 border-t border-gray-100">
                 <div className="w-10 h-10 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center font-bold text-sm">
