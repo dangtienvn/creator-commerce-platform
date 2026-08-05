@@ -3,13 +3,7 @@
  * Cung cấp đối tượng Prisma client và cấu hình kết nối, đồng thời tự động
  * đồng bộ hóa một số thay đổi trong schema với cơ sở dữ liệu.
  */
-const { PrismaClient } = require('@prisma/client');
-
-/**
- * Khởi tạo đối tượng Prisma client để thao tác với cơ sở dữ liệu.
- * @type {PrismaClient}
- */
-const prisma = new PrismaClient({});
+const { prisma } = require('@repo/database');
 
 // Override $queryRawUnsafe để xử lý placeholder cho PostgreSQL ($1, $2, ...) thay vì '?'
 const originalQueryRawUnsafe = prisma.$queryRawUnsafe.bind(prisma);
