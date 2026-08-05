@@ -26,7 +26,7 @@ const transporter = nodemailer.createTransport({
 async function sendResetPasswordEmail(toEmail, token) {
   const frontend = process.env.FRONTEND_URL || 'http://localhost:3000';
   // link to static reset page
-  const resetLink = `${frontend.replace(/\/$/, '')}/reset-password.html?token=${token}`;
+  const resetLink = `${frontend.replace(/\/$/, '')}/reset-password?token=${token}`;
 
   const info = await transporter.sendMail({
     from: process.env.FROM_EMAIL || 'no-reply@example.com',
@@ -66,7 +66,7 @@ function paymentMethodLabel(method) {
  */
 async function sendSetPasswordInviteEmail(toEmail, token, name) {
   const frontend = process.env.FRONTEND_URL || 'http://localhost:3000';
-  const setPasswordLink = `${frontend.replace(/\/$/, '')}/reset-password.html?token=${token}`;
+  const setPasswordLink = `${frontend.replace(/\/$/, '')}/reset-password?token=${token}`;
 
   const html = `
     <h2>Xin chào ${name || 'bạn'}!</h2>
@@ -172,7 +172,7 @@ async function sendPaymentSuccessEmail(toEmail, orderDetails) {
   
   let itemsHtml = (items || []).map(i => `<li>${i.name || i.product_name}</li>`).join('');
   const frontend = process.env.FRONTEND_URL || 'http://localhost:3000';
-  const learnLink = `${frontend.replace(/\/$/, '')}/my-learning.html`;
+  const learnLink = `${frontend.replace(/\/$/, '')}/my-learning`;
 
   const html = `
     <h2>Thanh toán thành công!</h2>
