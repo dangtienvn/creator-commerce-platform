@@ -19,18 +19,21 @@ const AuthController = {
    */
   async register(req, res, next) {
     try {
-      const { name, email, password, phone } = req.body || {};
+      const { name, email, password, phone, role } = req.body || {};
 
       if (!name || !email || !password || !phone) {
         return res.status(400).json({ success: false, message: "Vui lòng điền đầy đủ thông tin" });
       }
+
+      // Allow either 'creator' or 'customer'. Default is 'customer'. Disallow 'admin'.
+      const assignedRole = role === 'creator' ? 'creator' : 'customer';
 
       const user = await AuthService.register({ 
         full_name: name, 
         phone,
         email, 
         password, 
-        role: "customer"
+        role: assignedRole
       });
 
       // send email verification async
