@@ -68,10 +68,10 @@ const protect = async (req, res, next) => {
  * @returns {void}
  */
 const admin = (req, res, next) => {
-  if (req.user && req.user.role_name === "admin") {
+  if (req.user && (req.user.role_name === "admin" || req.user.role_name === "super_admin" || req.user.role_name === "creator")) {
     next();
   } else {
-    res.status(403).json({ success: false, message: "Không được cấp quyền, yêu cầu quyền admin" });
+    res.status(403).json({ success: false, message: "Không được cấp quyền, yêu cầu quyền admin hoac creator" });
   }
 };
 
@@ -133,22 +133,22 @@ const optionalProtect = async (req, res, next) => {
  * @param {string} requiredPermission - Tên quyền yêu cầu (ví dụ: "create_product").
  * @returns {import('express').RequestHandler}
  */
-const requirePermission = (requiredPermission) => (req, res, next) => {
-  if (!req.user) {
-    return res.status(401).json({ success: false, message: "Không được cấp quyền, chưa đăng nhập" });
-  }
-
-  // Admin mặc định có toàn quyền (tùy chọn)
-  if (req.user.role_name === 'admin') {
+  const requirePermission = (requiredPermission) => (req, res, next) => {
+    if (!req.user) {
+      return res.status(401).json({ success: false, message: "Không được cấp quyền, chưa đăng nhập" });
+    }
+  
+    // Admin mặc định có toàn quyền (tùy chọn)
+    if (req.user.role_name === 'admin' || req.user.role_name === 'super_admin') {
+      return next();
+    }
+  
+    const userPermissions = req.user.permissions || [];
+    if (!userPermissions.includes(requiredPermission)) {
+      return res.status(403).json({ success: false, message: `Bạn không có quyền thực hiện thao tác này (yêu cầu quyền: ${requiredPermission})` });
+    }
+  
     return next();
-  }
-
-  const userPermissions = req.user.permissions || [];
-  if (!userPermissions.includes(requiredPermission)) {
-    return res.status(403).json({ success: false, message: `Bạn không có quyền thực hiện thao tác này (yêu cầu quyền: ${requiredPermission})` });
-  }
-
-  return next();
-};
+  };
 
 module.exports = { protect, admin, authorize, optionalProtect, requirePermission };
