@@ -5,13 +5,13 @@
 const express = require("express");
 const router = express.Router();
 const CategoryController = require("./category.controller");
-const { protect, admin } = require("../../middlewares/auth.middleware");
+const { protect, authorize } = require("../../middlewares/auth.middleware");
 
 /**
  * Route lấy danh sách danh mục trong thùng rác
- * Yêu cầu đăng nhập (protect) và quyền quản trị viên (admin)
+ * Yêu cầu đăng nhập (protect) và quyền quản trị viên (admin) và creator
  */
-router.get("/trash", protect, admin, CategoryController.getTrash);
+router.get("/trash", protect, authorize("admin", "creator"), CategoryController.getTrash);
 router.get("/tree", CategoryController.getTree);
 
 /**
@@ -28,26 +28,26 @@ router.get("/:id", CategoryController.getById);
 
 /**
  * Route tạo mới danh mục
- * Yêu cầu đăng nhập (protect) và quyền quản trị viên (admin)
+ * Yêu cầu đăng nhập (protect) và quyền quản trị viên (admin) và creator
  */
-router.post("/", protect, admin, CategoryController.create);
+router.post("/", protect, authorize("admin", "creator"), CategoryController.create);
 
 /**
  * Route cập nhật thông tin danh mục theo ID
- * Yêu cầu đăng nhập (protect) và quyền quản trị viên (admin)
+ * Yêu cầu đăng nhập (protect) và quyền quản trị viên (admin) và creator
  */
-router.put("/:id", protect, admin, CategoryController.update);
+router.put("/:id", protect, authorize("admin", "creator"), CategoryController.update);
 
 /**
  * Route xóa mềm danh mục theo ID (đưa vào thùng rác)
- * Yêu cầu đăng nhập (protect) và quyền quản trị viên (admin)
+ * Yêu cầu đăng nhập (protect) và quyền quản trị viên (admin) và creator
  */
-router.delete("/:id", protect, admin, CategoryController.delete);
+router.delete("/:id", protect, authorize("admin", "creator"), CategoryController.delete);
 
 /**
  * Route khôi phục danh mục từ thùng rác theo ID
- * Yêu cầu đăng nhập (protect) và quyền quản trị viên (admin)
+ * Yêu cầu đăng nhập (protect) và quyền quản trị viên (admin) và creator
  */
-router.put("/:id/restore", protect, admin, CategoryController.restore);
+router.put("/:id/restore", protect, authorize("admin", "creator"), CategoryController.restore);
 
 module.exports = router;
