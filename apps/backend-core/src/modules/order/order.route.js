@@ -22,15 +22,15 @@ router.get("/my/orders", OrderController.getMyOrders);
 router.post("/checkout", OrderValidation.validateCheckout, OrderController.checkout);
 router.post("/:id/confirm-payment", OrderController.confirmPayment);
 
-// API dành cho Quản trị viên (Admin)
-router.get("/trash", authorize("admin"), OrderController.getTrash);
-router.get("/", authorize("admin"), OrderController.getAll);
+// API dành cho Quản trị viên (Admin) và Creator
+router.get("/trash", authorize("admin", "creator"), OrderController.getTrash);
+router.get("/", authorize("admin", "creator"), OrderController.getAll);
 router.get("/:id", OrderController.getById);
-router.post("/", authorize("admin"), OrderValidation.validateCreate, OrderController.create);
-router.put("/:id", authorize("admin"), OrderController.update);
-router.delete("/:id", authorize("admin"), OrderController.delete);
-router.put("/:id/restore", authorize("admin"), OrderController.restore);
-router.put("/:id/revoke", authorize("admin"), OrderController.revokeOrder);
-router.post("/:id/resend-email", authorize("admin"), OrderController.resendEmail);
+router.post("/", authorize("admin", "creator"), OrderValidation.validateCreate, OrderController.create);
+router.put("/:id", authorize("admin", "creator"), OrderController.update);
+router.delete("/:id", authorize("admin", "creator"), OrderController.delete);
+router.put("/:id/restore", authorize("admin", "creator"), OrderController.restore);
+router.put("/:id/revoke", authorize("admin", "creator"), OrderController.revokeOrder);
+router.post("/:id/resend-email", authorize("admin", "creator"), OrderController.resendEmail);
 
 module.exports = router;

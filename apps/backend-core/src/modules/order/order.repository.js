@@ -146,6 +146,7 @@ class OrderRepository {
     return orders.map(o => ({
       ...o,
       items: o.order_items.map(item => ({
+        product_id: item.product_id,
         product_name: item.product_name,
         quantity: item.quantity,
         price: item.price,
