@@ -28,7 +28,8 @@ const ReportController = {
         startDate,
         endDate,
         productType,
-        customerSource
+        customerSource,
+        user: req.user
       });
       res.json({ success: true, data: reportData });
     } catch (error) {

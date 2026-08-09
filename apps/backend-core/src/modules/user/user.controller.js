@@ -1,5 +1,5 @@
-/**
- * @fileoverview Module này đóng vai trò là Controller xử lý các yêu cầu (requests) HTTP liên quan đến người dùng (User).
+﻿/**
+ * @fileoverview Module nÃ y Ä‘Ã³ng vai trÃ² lÃ  Controller xá»­ lÃ½ cÃ¡c yÃªu cáº§u (requests) HTTP liÃªn quan Ä‘áº¿n ngÆ°á»i dÃ¹ng (User).
  * @module UserController
  */
 const UserService = require("./user.service");
@@ -8,12 +8,12 @@ const cloudinary = require("../../config/cloudinary");
 
 const UserController = {
   /**
-   * Lấy danh sách tất cả người dùng kèm theo các bộ lọc tùy chọn.
+   * Láº¥y danh sÃ¡ch táº¥t cáº£ ngÆ°á»i dÃ¹ng kÃ¨m theo cÃ¡c bá»™ lá»c tÃ¹y chá»n.
    *
    * @async
-   * @param {Object} req - Đối tượng request của Express chứa các tham số query (req.query).
-   * @param {Object} res - Đối tượng response của Express.
-   * @param {Function} next - Hàm middleware chuyển tiếp lỗi.
+   * @param {Object} req - Äá»‘i tÆ°á»£ng request cá»§a Express chá»©a cÃ¡c tham sá»‘ query (req.query).
+   * @param {Object} res - Äá»‘i tÆ°á»£ng response cá»§a Express.
+   * @param {Function} next - HÃ m middleware chuyá»ƒn tiáº¿p lá»—i.
    * @returns {Promise<void>}
    */
   async getAll(req, res, next) {
@@ -27,12 +27,12 @@ const UserController = {
   },
 
   /**
-   * Lấy thông tin chi tiết của một người dùng theo ID.
+   * Láº¥y thÃ´ng tin chi tiáº¿t cá»§a má»™t ngÆ°á»i dÃ¹ng theo ID.
    *
    * @async
-   * @param {Object} req - Đối tượng request của Express chứa ID người dùng trong tham số URL (req.params.id).
-   * @param {Object} res - Đối tượng response của Express.
-   * @param {Function} next - Hàm middleware chuyển tiếp lỗi.
+   * @param {Object} req - Äá»‘i tÆ°á»£ng request cá»§a Express chá»©a ID ngÆ°á»i dÃ¹ng trong tham sá»‘ URL (req.params.id).
+   * @param {Object} res - Äá»‘i tÆ°á»£ng response cá»§a Express.
+   * @param {Function} next - HÃ m middleware chuyá»ƒn tiáº¿p lá»—i.
    * @returns {Promise<void>}
    */
   async getById(req, res, next) {
@@ -45,12 +45,12 @@ const UserController = {
   },
 
   /**
-   * Tạo một tài khoản người dùng mới.
+   * Táº¡o má»™t tÃ i khoáº£n ngÆ°á»i dÃ¹ng má»›i.
    *
    * @async
-   * @param {Object} req - Đối tượng request của Express chứa dữ liệu người dùng (req.body).
-   * @param {Object} res - Đối tượng response của Express.
-   * @param {Function} next - Hàm middleware chuyển tiếp lỗi.
+   * @param {Object} req - Äá»‘i tÆ°á»£ng request cá»§a Express chá»©a dá»¯ liá»‡u ngÆ°á»i dÃ¹ng (req.body).
+   * @param {Object} res - Äá»‘i tÆ°á»£ng response cá»§a Express.
+   * @param {Function} next - HÃ m middleware chuyá»ƒn tiáº¿p lá»—i.
    * @returns {Promise<void>}
    */
   async create(req, res, next) {
@@ -64,12 +64,12 @@ const UserController = {
   },
 
   /**
-   * Cập nhật thông tin của một người dùng dựa theo ID.
+   * Cáº­p nháº­t thÃ´ng tin cá»§a má»™t ngÆ°á»i dÃ¹ng dá»±a theo ID.
    *
    * @async
-   * @param {Object} req - Đối tượng request của Express chứa ID (req.params.id) và thông tin cần cập nhật (req.body).
-   * @param {Object} res - Đối tượng response của Express.
-   * @param {Function} next - Hàm middleware chuyển tiếp lỗi.
+   * @param {Object} req - Äá»‘i tÆ°á»£ng request cá»§a Express chá»©a ID (req.params.id) vÃ  thÃ´ng tin cáº§n cáº­p nháº­t (req.body).
+   * @param {Object} res - Äá»‘i tÆ°á»£ng response cá»§a Express.
+   * @param {Function} next - HÃ m middleware chuyá»ƒn tiáº¿p lá»—i.
    * @returns {Promise<void>}
    */
   async update(req, res, next) {
@@ -83,30 +83,30 @@ const UserController = {
   },
 
   /**
-   * Xóa mềm (soft delete) một người dùng theo ID.
+   * XÃ³a má»m (soft delete) má»™t ngÆ°á»i dÃ¹ng theo ID.
    *
    * @async
-   * @param {Object} req - Đối tượng request của Express chứa ID của người dùng cần xóa.
-   * @param {Object} res - Đối tượng response của Express.
-   * @param {Function} next - Hàm middleware chuyển tiếp lỗi.
+   * @param {Object} req - Äá»‘i tÆ°á»£ng request cá»§a Express chá»©a ID cá»§a ngÆ°á»i dÃ¹ng cáº§n xÃ³a.
+   * @param {Object} res - Äá»‘i tÆ°á»£ng response cá»§a Express.
+   * @param {Function} next - HÃ m middleware chuyá»ƒn tiáº¿p lá»—i.
    * @returns {Promise<void>}
    */
   async delete(req, res, next) {
     try {
       await UserService.deleteUser(req.params.id);
-      return ResponseHelper.success(res, null, "Xóa người dùng thành công");
+      return ResponseHelper.success(res, null, "XÃ³a ngÆ°á»i dÃ¹ng thÃ nh cÃ´ng");
     } catch (error) {
       next(error);
     }
   },
 
   /**
-   * Lấy danh sách người dùng đã bị xóa mềm (trong thùng rác).
+   * Láº¥y danh sÃ¡ch ngÆ°á»i dÃ¹ng Ä‘Ã£ bá»‹ xÃ³a má»m (trong thÃ¹ng rÃ¡c).
    *
    * @async
-   * @param {Object} req - Đối tượng request của Express chứa các tham số bộ lọc.
-   * @param {Object} res - Đối tượng response của Express.
-   * @param {Function} next - Hàm middleware chuyển tiếp lỗi.
+   * @param {Object} req - Äá»‘i tÆ°á»£ng request cá»§a Express chá»©a cÃ¡c tham sá»‘ bá»™ lá»c.
+   * @param {Object} res - Äá»‘i tÆ°á»£ng response cá»§a Express.
+   * @param {Function} next - HÃ m middleware chuyá»ƒn tiáº¿p lá»—i.
    * @returns {Promise<void>}
    */
   async getTrash(req, res, next) {
@@ -120,66 +120,66 @@ const UserController = {
   },
 
   /**
-   * Khôi phục tài khoản của một người dùng đã bị xóa mềm.
+   * KhÃ´i phá»¥c tÃ i khoáº£n cá»§a má»™t ngÆ°á»i dÃ¹ng Ä‘Ã£ bá»‹ xÃ³a má»m.
    *
    * @async
-   * @param {Object} req - Đối tượng request của Express chứa ID của người dùng cần khôi phục.
-   * @param {Object} res - Đối tượng response của Express.
-   * @param {Function} next - Hàm middleware chuyển tiếp lỗi.
+   * @param {Object} req - Äá»‘i tÆ°á»£ng request cá»§a Express chá»©a ID cá»§a ngÆ°á»i dÃ¹ng cáº§n khÃ´i phá»¥c.
+   * @param {Object} res - Äá»‘i tÆ°á»£ng response cá»§a Express.
+   * @param {Function} next - HÃ m middleware chuyá»ƒn tiáº¿p lá»—i.
    * @returns {Promise<void>}
    */
   async restore(req, res, next) {
     try {
       await UserService.restoreUser(req.params.id);
-      return ResponseHelper.success(res, null, "Khôi phục người dùng thành công");
+      return ResponseHelper.success(res, null, "KhÃ´i phá»¥c ngÆ°á»i dÃ¹ng thÃ nh cÃ´ng");
     } catch (error) {
       next(error);
     }
   },
 
   /**
-   * Khóa (lock) tài khoản của một người dùng.
+   * KhÃ³a (lock) tÃ i khoáº£n cá»§a má»™t ngÆ°á»i dÃ¹ng.
    *
    * @async
-   * @param {Object} req - Đối tượng request của Express chứa ID của người dùng cần khóa.
-   * @param {Object} res - Đối tượng response của Express.
-   * @param {Function} next - Hàm middleware chuyển tiếp lỗi.
+   * @param {Object} req - Äá»‘i tÆ°á»£ng request cá»§a Express chá»©a ID cá»§a ngÆ°á»i dÃ¹ng cáº§n khÃ³a.
+   * @param {Object} res - Äá»‘i tÆ°á»£ng response cá»§a Express.
+   * @param {Function} next - HÃ m middleware chuyá»ƒn tiáº¿p lá»—i.
    * @returns {Promise<void>}
    */
   async lockUser(req, res, next) {
     try {
       await UserService.lockUser(req.params.id);
-      return ResponseHelper.success(res, null, "Khóa tài khoản thành công");
+      return ResponseHelper.success(res, null, "KhÃ³a tÃ i khoáº£n thÃ nh cÃ´ng");
     } catch (error) {
       next(error);
     }
   },
 
   /**
-   * Mở khóa (unlock) tài khoản cho một người dùng.
+   * Má»Ÿ khÃ³a (unlock) tÃ i khoáº£n cho má»™t ngÆ°á»i dÃ¹ng.
    *
    * @async
-   * @param {Object} req - Đối tượng request của Express chứa ID của người dùng cần mở khóa.
-   * @param {Object} res - Đối tượng response của Express.
-   * @param {Function} next - Hàm middleware chuyển tiếp lỗi.
+   * @param {Object} req - Äá»‘i tÆ°á»£ng request cá»§a Express chá»©a ID cá»§a ngÆ°á»i dÃ¹ng cáº§n má»Ÿ khÃ³a.
+   * @param {Object} res - Äá»‘i tÆ°á»£ng response cá»§a Express.
+   * @param {Function} next - HÃ m middleware chuyá»ƒn tiáº¿p lá»—i.
    * @returns {Promise<void>}
    */
   async unlockUser(req, res, next) {
     try {
       await UserService.unlockUser(req.params.id);
-      return ResponseHelper.success(res, null, "Mở khóa tài khoản thành công");
+      return ResponseHelper.success(res, null, "Má»Ÿ khÃ³a tÃ i khoáº£n thÃ nh cÃ´ng");
     } catch (error) {
       next(error);
     }
   },
 
   /**
-   * Lấy thông tin cá nhân của người dùng đang đăng nhập (Profile).
+   * Láº¥y thÃ´ng tin cÃ¡ nhÃ¢n cá»§a ngÆ°á»i dÃ¹ng Ä‘ang Ä‘Äƒng nháº­p (Profile).
    *
    * @async
-   * @param {Object} req - Đối tượng request của Express chứa thông tin người dùng được xác thực (req.user).
-   * @param {Object} res - Đối tượng response của Express.
-   * @param {Function} next - Hàm middleware chuyển tiếp lỗi.
+   * @param {Object} req - Äá»‘i tÆ°á»£ng request cá»§a Express chá»©a thÃ´ng tin ngÆ°á»i dÃ¹ng Ä‘Æ°á»£c xÃ¡c thá»±c (req.user).
+   * @param {Object} res - Äá»‘i tÆ°á»£ng response cá»§a Express.
+   * @param {Function} next - HÃ m middleware chuyá»ƒn tiáº¿p lá»—i.
    * @returns {Promise<void>}
    */
   async getMyProfile(req, res, next) {
@@ -192,13 +192,13 @@ const UserController = {
   },
 
   /**
-   * Cập nhật thông tin cá nhân của người dùng đang đăng nhập.
-   * (Loại bỏ các trường nhảy cảm như password, role_id, status)
+   * Cáº­p nháº­t thÃ´ng tin cÃ¡ nhÃ¢n cá»§a ngÆ°á»i dÃ¹ng Ä‘ang Ä‘Äƒng nháº­p.
+   * (Loáº¡i bá» cÃ¡c trÆ°á»ng nháº£y cáº£m nhÆ° password, role_id, status)
    *
    * @async
-   * @param {Object} req - Đối tượng request của Express chứa thông tin cập nhật trong req.body.
-   * @param {Object} res - Đối tượng response của Express.
-   * @param {Function} next - Hàm middleware chuyển tiếp lỗi.
+   * @param {Object} req - Äá»‘i tÆ°á»£ng request cá»§a Express chá»©a thÃ´ng tin cáº­p nháº­t trong req.body.
+   * @param {Object} res - Äá»‘i tÆ°á»£ng response cá»§a Express.
+   * @param {Function} next - HÃ m middleware chuyá»ƒn tiáº¿p lá»—i.
    * @returns {Promise<void>}
    */
   async updateMyProfile(req, res, next) {
@@ -213,46 +213,46 @@ const UserController = {
   },
 
   /**
-   * Thay đổi mật khẩu của người dùng đang đăng nhập.
+   * Thay Ä‘á»•i máº­t kháº©u cá»§a ngÆ°á»i dÃ¹ng Ä‘ang Ä‘Äƒng nháº­p.
    *
    * @async
-   * @param {Object} req - Đối tượng request của Express chứa mật khẩu cũ (currentPassword) và mật khẩu mới (newPassword).
-   * @param {Object} res - Đối tượng response của Express.
-   * @param {Function} next - Hàm middleware chuyển tiếp lỗi.
-   * @returns {Promise<void|Object>} Trả về thông báo lỗi nếu dữ liệu không hợp lệ.
+   * @param {Object} req - Äá»‘i tÆ°á»£ng request cá»§a Express chá»©a máº­t kháº©u cÅ© (currentPassword) vÃ  máº­t kháº©u má»›i (newPassword).
+   * @param {Object} res - Äá»‘i tÆ°á»£ng response cá»§a Express.
+   * @param {Function} next - HÃ m middleware chuyá»ƒn tiáº¿p lá»—i.
+   * @returns {Promise<void|Object>} Tráº£ vá» thÃ´ng bÃ¡o lá»—i náº¿u dá»¯ liá»‡u khÃ´ng há»£p lá»‡.
    */
   async changeMyPassword(req, res, next) {
     try {
       const userId = req.user.id;
       const { currentPassword, newPassword } = req.body;
-      if (!currentPassword || !newPassword) {
-        return ResponseHelper.error(res, "Vui lòng cung cấp mật khẩu cũ và mới");
+      if (!currentPassword || !newPassword) { return ResponseHelper.error(res, "Vui lòng cung cấp mật khẩu cũ và mới"); } if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]).{8,}$/.test(newPassword)) { return ResponseHelper.error(res, "Mật khẩu phải từ 8 ký tự trở lên, chứa ít nhất một chữ hoa, một chữ thường và một ký tự đặc biệt"); } if (!currentPassword) {
+        return ResponseHelper.error(res, "Vui lÃ²ng cung cáº¥p máº­t kháº©u cÅ© vÃ  má»›i");
       }
       await UserService.updateUser(userId, { currentPassword, newPassword });
-      return ResponseHelper.success(res, null, "Đổi mật khẩu thành công");
+      return ResponseHelper.success(res, null, "Äá»•i máº­t kháº©u thÃ nh cÃ´ng");
     } catch (error) {
       next(error);
     }
   },
 
   /**
-   * Cập nhật ảnh đại diện (avatar) của người dùng đang đăng nhập.
-   * Ảnh sẽ được tải lên dịch vụ Cloudinary.
+   * Cáº­p nháº­t áº£nh Ä‘áº¡i diá»‡n (avatar) cá»§a ngÆ°á»i dÃ¹ng Ä‘ang Ä‘Äƒng nháº­p.
+   * áº¢nh sáº½ Ä‘Æ°á»£c táº£i lÃªn dá»‹ch vá»¥ Cloudinary.
    *
    * @async
-   * @param {Object} req - Đối tượng request của Express chứa tệp hình ảnh được tải lên (req.file).
-   * @param {Object} res - Đối tượng response của Express.
-   * @param {Function} next - Hàm middleware chuyển tiếp lỗi.
-   * @returns {Promise<void|Object>} Trả về URL của avatar mới.
+   * @param {Object} req - Äá»‘i tÆ°á»£ng request cá»§a Express chá»©a tá»‡p hÃ¬nh áº£nh Ä‘Æ°á»£c táº£i lÃªn (req.file).
+   * @param {Object} res - Äá»‘i tÆ°á»£ng response cá»§a Express.
+   * @param {Function} next - HÃ m middleware chuyá»ƒn tiáº¿p lá»—i.
+   * @returns {Promise<void|Object>} Tráº£ vá» URL cá»§a avatar má»›i.
    */
   async updateMyAvatar(req, res, next) {
     try {
       const userId = req.user.id;
       if (!req.file) {
-        return ResponseHelper.error(res, "Không tìm thấy file ảnh");
+        return ResponseHelper.error(res, "KhÃ´ng tÃ¬m tháº¥y file áº£nh");
       }
 
-      // Tải lên Cloudinary bằng stream vì dùng memoryStorage
+      // Táº£i lÃªn Cloudinary báº±ng stream vÃ¬ dÃ¹ng memoryStorage
       const uploadPromise = new Promise((resolve, reject) => {
         const stream = cloudinary.uploader.upload_stream(
           { folder: "crm_avatars" },
@@ -267,10 +267,10 @@ const UserController = {
       const result = await uploadPromise;
       const avatar_url = result.secure_url;
 
-      // Cập nhật URL vào Database
+      // Cáº­p nháº­t URL vÃ o Database
       const user = await UserService.updateUser(userId, { avatar_url });
       
-      return ResponseHelper.success(res, { avatar_url }, "Cập nhật Avatar thành công");
+      return ResponseHelper.success(res, { avatar_url }, "Cáº­p nháº­t Avatar thÃ nh cÃ´ng");
     } catch (error) {
       next(error);
     }
@@ -278,3 +278,4 @@ const UserController = {
 };
 
 module.exports = UserController;
+

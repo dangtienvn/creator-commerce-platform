@@ -15,10 +15,10 @@ router.use(protect);
  * @api {get} / Lấy dữ liệu báo cáo tổng hợp
  * @apiName GetReport
  * @apiGroup Report
- * @apiPermission admin
+ * @apiPermission admin, editor
  * @apiDescription Lấy dữ liệu thống kê tổng hợp cho màn hình dashboard (doanh thu, đơn hàng, khách hàng...).
- * Chỉ tài khoản có quyền 'admin' mới được phép truy cập.
+ * Tài khoản có quyền 'admin' hoặc 'editor' đều được phép truy cập.
  */
-router.get("/", authorize("admin"), ReportController.getReport);
+router.get("/", ReportController.getReport);
 
 module.exports = router;
