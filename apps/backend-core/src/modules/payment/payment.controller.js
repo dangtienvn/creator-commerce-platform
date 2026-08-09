@@ -1,7 +1,6 @@
 const VNPayService = require("../../shared/vnpay.service");
 const StripeService = require("../../shared/stripe.service");
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const { prisma } = require("../../config/database");
 const ResponseHelper = require("../../utils/response.helper");
 const { MailQueueService } = require("../../queues/mail.queue");
 
