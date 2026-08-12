@@ -1,47 +1,31 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import api from '../lib/api';
+import { useAuth } from '../context/AuthContext';
 
 const AuthGuard = ({ children, allowedRoles = [] }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, role, loading } = useAuth();
+  
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const verifyAuth = async () => {
-      const token = localStorage.getItem('token');
-      if (!token) {
+    if (!loading) {
+      if (!user) {
         navigate('/login', { state: { from: location } });
-        return;
-      }
-
-      try {
-        const response = await api.get('/users/my-profile');
-        if (response.success) {
-          const userRole = response.data.role_name?.toLowerCase();
-          
-          if (allowedRoles.length > 0 && !allowedRoles.includes(userRole)) {
-            // Role not allowed
-            navigate('/'); // Redirect to dashboard or forbidden page
-            return;
-          }
-          
-          setIsAuthorized(true);
+      } else if (allowedRoles.length > 0 && !allowedRoles.includes(role)) {
+        if (role === 'super_admin' || role === 'admin') {
+          navigate('/admin/creators');
         } else {
-          throw new Error('Profile fetch failed');
+          navigate('/');
         }
-      } catch (error) {
-        console.error('Auth verification failed:', error);
-        localStorage.removeItem('token');
-        navigate('/login', { state: { from: location } });
-      } finally {
-        setIsLoading(false);
+      } else {
+        setIsAuthorized(true);
       }
-    };
-
-    verifyAuth();
-  }, [navigate, location, allowedRoles]);
+      setIsLoading(false);
+    }
+  }, [user, role, loading, navigate, location, allowedRoles]);
 
   if (isLoading) {
     return (

@@ -1,7 +1,8 @@
-import { LayoutDashboard, Users, ShoppingCart, Box, Tag, FileText, Settings, Ticket, LogOut, X } from 'lucide-react';
+import { LayoutDashboard, Users, ShoppingCart, Box, Tag, FileText, Settings, ShieldCheck, DollarSign, Activity, LogOut, X } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
-const navItems = [
+const creatorNavItems = [
   { name: 'Dashboard', icon: LayoutDashboard, path: '/' },
   { name: 'Orders', icon: ShoppingCart, path: '/orders' },
   { name: 'Products', icon: Box, path: '/products' },
@@ -12,7 +13,18 @@ const navItems = [
   { name: 'Settings', icon: Settings, path: '/settings' },
 ];
 
+const adminNavItems = [
+  { name: 'Creators', icon: Users, path: '/admin/creators' },
+  { name: 'Moderation', icon: ShieldCheck, path: '/admin/moderation' },
+  { name: 'Payouts', icon: DollarSign, path: '/admin/payouts' },
+  { name: 'Analytics', icon: Activity, path: '/admin/analytics' },
+  { name: 'Settings', icon: Settings, path: '/admin/settings' },
+];
+
 export default function Sidebar({ isOpen, setIsOpen }) {
+  const { role } = useAuth() || { role: 'creator' }; // fallback
+  const navItems = role === 'super_admin' ? adminNavItems : creatorNavItems;
+
   return (
     <>
       {/* Mobile overlay */}

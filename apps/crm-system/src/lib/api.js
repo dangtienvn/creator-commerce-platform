@@ -25,13 +25,15 @@ api.interceptors.response.use(
   },
   (error) => {
     if (error.response) {
-      if (error.response.status === 401 || error.response.status === 403) {
+      if (error.response.status === 401) {
         localStorage.removeItem('token');
         sessionStorage.removeItem('token');
         if (window.location.pathname !== '/login') {
           toast.error('Session expired. Please login again.');
           window.location.href = '/login';
         }
+      } else if (error.response.status === 403) {
+        toast.error('You do not have permission to perform this action.');
       } else {
         // Không hiển thị toast lỗi ở trang login để form tự xử lý
         if (!error.config?.url?.includes('/auth/login')) {
