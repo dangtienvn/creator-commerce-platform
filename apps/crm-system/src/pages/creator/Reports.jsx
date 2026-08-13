@@ -99,7 +99,7 @@ export default function Reports() {
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
                     </Pie>
-                    <Tooltip formatter={(value) => `$${value}`} />
+                    <Tooltip formatter={(value) => `${Number(value).toLocaleString()} ₫`} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
@@ -120,9 +120,9 @@ export default function Reports() {
                     {(data?.topProducts || []).map((product, idx) => (
                       <tr key={idx} className="border-b border-slate-50 last:border-0 hover:bg-slate-50">
                         <td className="py-3 text-sm text-slate-800 font-medium">{product.name}</td>
-                        <td className="py-3 text-sm text-slate-600 text-right">{product.sold}</td>
+                        <td className="py-3 text-sm text-slate-600 text-right">{product.sales || product.sold}</td>
                         <td className="py-3 text-sm text-blue-600 font-bold text-right">
-                          ${parseFloat(product.revenue).toLocaleString()}
+                          {Number(product.revenue).toLocaleString()} ₫
                         </td>
                       </tr>
                     ))}
@@ -147,11 +147,11 @@ export default function Reports() {
                     </linearGradient>
                   </defs>
                   <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 12}} dy={10} />
-                  <YAxis axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 12}} dx={-10} tickFormatter={(val) => `$${val}`} />
+                  <YAxis axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 12}} dx={-10} tickFormatter={(val) => `${(val / 1000000).toFixed(0)}M`} />
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
                   <Tooltip 
                     contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
-                    formatter={(value) => [`$${value}`, 'Revenue']}
+                    formatter={(value) => [`${Number(value).toLocaleString()} ₫`, 'Doanh thu']}
                   />
                   <Area type="monotone" dataKey="revenue" stroke="#10b981" strokeWidth={3} fillOpacity={1} fill="url(#colorRevenue2)" />
                 </AreaChart>

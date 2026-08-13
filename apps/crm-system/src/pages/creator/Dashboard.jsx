@@ -52,15 +52,15 @@ export default function Dashboard() {
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard 
-          title="Total Revenue" 
-          value={`$${parseFloat(stats?.totalRevenue || 0).toLocaleString()}`} 
+          title="Tổng Doanh thu" 
+          value={`${Number(stats?.totalRevenue || 0).toLocaleString()} ₫`} 
           icon={<DollarSign className="w-6 h-6 text-blue-600" />} 
           trend="+12.5%" 
           trendUp={true} 
           bg="bg-blue-50" 
         />
         <StatCard 
-          title="Total Orders" 
+          title="Tổng Đơn hàng" 
           value={(stats?.totalOrders || 0).toLocaleString()} 
           icon={<ShoppingBag className="w-6 h-6 text-indigo-600" />} 
           trend="+5.2%" 
@@ -68,7 +68,7 @@ export default function Dashboard() {
           bg="bg-indigo-50" 
         />
         <StatCard 
-          title="Total Customers" 
+          title="Khách hàng" 
           value={(stats?.totalCustomers || 0).toLocaleString()} 
           icon={<Users className="w-6 h-6 text-purple-600" />} 
           trend="+2.1%" 
@@ -76,8 +76,8 @@ export default function Dashboard() {
           bg="bg-purple-50" 
         />
         <StatCard 
-          title="Avg. Order Value" 
-          value={`$${parseFloat(stats?.averageOrderValue || 0).toFixed(2)}`} 
+          title="Lợi nhuận" 
+          value={`${Number(stats?.totalProfit || 0).toLocaleString()} ₫`} 
           icon={<TrendingUp className="w-6 h-6 text-emerald-600" />} 
           trend="-1.4%" 
           trendUp={false} 
@@ -99,11 +99,11 @@ export default function Dashboard() {
                   </linearGradient>
                 </defs>
                 <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 12}} dy={10} />
-                <YAxis axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 12}} dx={-10} tickFormatter={(val) => `$${val}`} />
+                <YAxis axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 12}} dx={-10} tickFormatter={(val) => `${(val / 1000000).toFixed(0)}M`} />
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
                 <Tooltip 
                   contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
-                  formatter={(value) => [`$${value}`, 'Revenue']}
+                  formatter={(value) => [`${Number(value).toLocaleString()} ₫`, 'Doanh thu']}
                 />
                 <Area type="monotone" dataKey="revenue" stroke="#3b82f6" strokeWidth={3} fillOpacity={1} fill="url(#colorRevenue)" />
               </AreaChart>
