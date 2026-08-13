@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Eye, EyeOff, LayoutDashboard } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Eye, EyeOff, LayoutDashboard, Loader2 } from 'lucide-react';
 import api from '../../lib/api';
 
 const Login = () => {
@@ -23,7 +24,13 @@ const Login = () => {
         } else {
           sessionStorage.setItem('token', response.token);
         }
-        window.location.href = '/';
+        
+        const role = response.user?.role_name?.toLowerCase();
+        if (role === 'admin' || role === 'super_admin') {
+          window.location.href = '/admin/creators';
+        } else {
+          window.location.href = '/';
+        }
       } else {
         setError(response.message || 'Đăng nhập thất bại.');
       }
@@ -105,9 +112,9 @@ const Login = () => {
               </div>
 
               <div className="text-sm">
-                <a href="#" className="font-semibold text-blue-600 hover:text-blue-500 transition-colors">
+                <Link to="/forgot-password" className="font-semibold text-blue-600 hover:text-blue-500 transition-colors">
                   Quên mật khẩu?
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -116,7 +123,7 @@ const Login = () => {
               disabled={loading}
               className="w-full bg-blue-600 text-white font-bold py-3.5 rounded-xl hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-600/20 transition-all disabled:opacity-70 disabled:hover:shadow-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
-              {loading ? 'Đang xác thực...' : 'Đăng nhập vào hệ thống'}
+              {loading ? <Loader2 className="w-5 h-5 animate-spin mx-auto" /> : 'Đăng nhập'}
             </button>
           </form>
         </div>
