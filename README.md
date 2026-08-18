@@ -1,19 +1,19 @@
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=E-Commerce%20and%20CRM%20Ecosystem&fontSize=50&fontAlignY=38&desc=Enterprise-grade%20Microservices%20Architecture&descAlignY=60&descAlign=60" width="100%" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=Creator%20Commerce%20Platform&fontSize=50&fontAlignY=38&desc=Digital%20Product%20Commerce%20Ecosystem&descAlignY=60&descAlign=60" width="100%" />
 
   <p>
     <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js-black?style=for-the-badge&amp;logo=next.js&amp;logoColor=white" alt="Next.js" /></a>
+    <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" /></a>
     <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&amp;logo=nodedotjs&amp;logoColor=white" alt="Node.js" /></a>
     <a href="https://expressjs.com/"><img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&amp;logo=express&amp;logoColor=white" alt="Express.js" /></a>
     <a href="https://www.prisma.io/"><img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma" /></a>
     <a href="https://www.postgresql.org/"><img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" /></a>
     <a href="https://redis.io/"><img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white" alt="Redis" /></a>
-    <a href="https://aws.amazon.com/s3/"><img src="https://img.shields.io/badge/AWS_S3-569A31?style=for-the-badge&logo=amazons3&logoColor=white" alt="AWS S3" /></a>
     <a href="https://www.docker.com/"><img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" /></a>
   </p>
   
   <p>
-    <i>A comprehensive, scalable, and modern E-Commerce and CRM ecosystem built with a microservices-oriented monorepo architecture. <b>(Now Production-Ready on Cloud)</b></i>
+    <i>An enterprise-grade, comprehensive platform empowering creators and independent sellers to distribute digital products effortlessly.</i>
   </p>
 </div>
 
@@ -21,135 +21,140 @@
 
 ## 📖 Overview
 
-This repository houses a complete **E-Commerce & CRM Ecosystem**. Designed with a **Service-Oriented Architecture (SOA)**, the system is highly scalable and maintainable, making it suitable for enterprise-level deployments. It orchestrates multiple independent applications handling different business domains—from customer-facing digital storefronts and SEO-optimized blogs to internal administration and powerful core APIs.
+The **Creator Commerce Platform** is a specialized E-Commerce and CRM Ecosystem built entirely around the distribution and management of **digital products**. It empowers creators and independent sellers to easily set up a storefront, sell their digital assets, and process payments without needing to construct a complex infrastructure from scratch.
 
-> **Production Deployment:** This project is now deployed on Cloud environments. It utilizes AWS S3 for secure digital asset delivery, Cloudinary for lightning-fast image CDNs, and Redis/BullMQ for asynchronous background jobs.
+Designed with a **Service-Oriented Architecture (SOA)**, the ecosystem cleanly separates the customer-facing digital storefront, the creator administration portal, and a robust core backend, ensuring seamless scalability and long-term maintainability.
 
-## 📚 Documentation
+## 🎯 Project Goals & Solutions
 
-For a deep dive into the architecture, deployment instructions, and API references, please read our newly updated **[Documentation Folder (`/docs`)](./docs)**.
+This platform focuses strictly on the complete digital product lifecycle—from **creation → publishing → selling → granting entitlements → distribution → updating → archiving**. It resolves the friction in selling digital goods by providing:
 
-- [System Architecture](./docs/02-system-design/architecture.md)
-- [Deployment Guide (Docker)](./docs/08-deployment/docker.md)
-- [Environment Variables Config](./docs/08-deployment/environment.md)
-- [Changelog](./docs/01-overview/changelog.md)
+- **Centralized Digital Asset Management:** Effortlessly create, publish, and manage digital products and their versions/updates.
+- **Automated Entitlement & Distribution:** Instantly grant usage rights (entitlements) and deliver products to customers upon successful payment verification.
+- **Streamlined Storefront Generation:** Beautiful, customizable web storefronts for product showcasing.
+- **Comprehensive Analytics & Tracking:** Monitor product launch performance, track revenue, and manage the customer base from a dedicated Creator Portal.
+- **Robust Order Processing:** Secure checkout flow, order handling, and robust payment webhooks integrations.
+
+## 👥 Target Audiences
+
+- **Admin:** Manages the entire platform with top-level system permissions.
+- **Creator / Seller:** Creates and sells digital products, manages their own customers, storefronts, and products.
+- **Customer:** Browses the storefront, securely purchases, and consumes the digital assets.
+- **Guest:** Discovers products, reads blogs, and browses the storefront.
+
+## 🚀 Scalability & Future-Proofing
+
+> The system is architected to be highly **modular and extensible**, allowing for the effortless addition of new digital product types, advanced creator/team management, and other business capabilities as real-world demands arise.
 
 ## 🏗 System Architecture
 
-The project is structured as a **Monorepo**, leveraging modern tooling to share configurations and packages across multiple applications.
+The project leverages a **Monorepo** structure, ensuring type safety and shared configuration across the entire ecosystem.
 
 ```mermaid
 graph TD
-    Client((Clients / Users))
-    Admin((Admins / Staff))
+    User((Customers / Guests))
+    Creator((Creators / Admins))
 
     subgraph Frontend Applications
-        Store[Digital Store<br/>Next.js 16]
-        Blog[Blog CMS<br/>Next.js 15]
-        CRM[CRM System<br/>React/Vite]
+        Store[Storefront Web<br/>Next.js]
+        Blog[Blog CMS<br/>Next.js]
+        CRM[Admin/Creator Portal<br/>React/Tailwind]
     end
 
     subgraph Backend Core
-        API[Core API Gateway<br/>Node.js / Express]
-        Queue[BullMQ Worker<br/>Background Jobs]
+        API[Backend Core API<br/>Node.js / Express]
+        Queue[Background Jobs<br/>Redis Worker]
     end
 
-    subgraph Databases & Cache
+    subgraph Databases & Infrastructure
         Postgres[(PostgreSQL<br/>Core DB)]
-        Redis[(Redis<br/>Message Queue)]
+        RedisCache[(Redis<br/>Cache & Queue)]
+    end
+    
+    subgraph Third-Party Integrations
+        Pay[Payment Gateways<br/>Stripe / VNPay]
     end
 
-    subgraph Cloud Services
-        S3[AWS S3<br/>Secure Files]
-        CLD[Cloudinary<br/>Image CDN]
-        PAY[Stripe/VNPay<br/>Payments]
-    end
-
-    Client -->|Browse & Shop| Store
-    Client -->|Read Articles| Blog
-    Admin -->|Manage System| CRM
+    User -->|Browse & Purchase| Store
+    User -->|Read Content| Blog
+    Creator -->|Manage Products, Lifecycle & Revenue| CRM
 
     Store -->|REST API| API
     Blog -->|REST API| API
     CRM -->|REST API| API
 
-    API -->|Write/Read| Postgres
-    API -->|Push Email Job| Redis
-    Queue -->|Pull Job| Redis
-
-    API -.->|Upload Images| CLD
-    API -.->|Signed URLs| S3
-    API -.->|Verify Webhooks| PAY
+    API -->|Read/Write Data| Postgres
+    API -->|Enqueue Task| RedisCache
+    Queue -->|Process Task| RedisCache
+    
+    API -.->|Verify Webhooks| Pay
 ```
 
 ## 📂 Ecosystem Structure
 
 All applications reside within the `apps/` directory, while shared resources and configurations are managed in `packages/`.
 
-### 1. [Backend Core (`apps/backend-core`)](./apps/backend-core)
+### 1. [Backend Core API (`apps/backend-core`)](./apps/backend-core)
+- **Role:** The engine of the platform. It handles business logic, automated digital product distribution & entitlements, secure authentication (RBAC), database transactions, and payment webhook processing.
+- **Tech Stack:** Node.js, TypeScript, Express.js, Prisma ORM, PostgreSQL, Redis.
 
-- **Role:** The heart of the ecosystem. It handles complex business logic, database transactions, robust authentication, role-based access control (RBAC), and serves a RESTful API.
-- **Tech Stack:** Node.js, Express, Prisma ORM, PostgreSQL, Redis, BullMQ, JWT.
+### 2. [Storefront Web (`apps/digital-store`)](./apps/digital-store)
+- **Role:** The customer-facing application. Optimized for SEO, speed, and providing a frictionless checkout experience for purchasing digital products.
+- **Tech Stack:** Next.js, React, Tailwind CSS.
 
-### 2. [Digital Store (`apps/digital-store`)](./apps/digital-store)
-
-- **Role:** The customer-facing digital storefront. Optimized for Core Web Vitals, SEO, and seamless user experience for purchasing digital products.
-- **Tech Stack:** Next.js 16, React 19, Tailwind CSS, Zustand.
-
-### 3. [CRM System (`apps/crm-system`)](./apps/crm-system)
-
-- **Role:** The internal administration portal. Features advanced dashboards, order tracking, product management, and revenue analytics.
-- **Tech Stack:** React 19, Vite, Tailwind CSS, React Query, Lucide Icons.
+### 3. [Creator / Admin Portal (`apps/crm-system`)](./apps/crm-system)
+- **Role:** The internal dashboard for creators and admins. Features robust tools to manage the digital product lifecycle (create, update, archive), track orders, view customer data, and analyze post-launch revenue.
+- **Tech Stack:** React, Tailwind CSS.
 
 ### 4. [Blog & CMS (`apps/blog-cms`)](./apps/blog-cms)
+- **Role:** A content management system integrated to drive organic traffic, market products, and share creator insights.
+- **Tech Stack:** Next.js, Tailwind CSS, PostgreSQL.
 
-- **Role:** A content management system designed to drive organic traffic and boost inbound marketing.
-- **Tech Stack:** Next.js 15, PostgreSQL, Prisma, Tailwind CSS.
+## ✨ Key Features
 
----
+- **Lifecycle Management:** Complete control over digital products including creation, versioning/updates, and archiving.
+- **Entitlement & Automated Delivery:** Securely grant access and distribute digital assets (files, access keys, links) immediately after successful checkout.
+- **Payment Gateway Integrations:** Robust webhook handlers to securely process payments and validate transactions.
+- **Enterprise-Grade Backend:** Type-safe database interactions with Prisma ORM and high-concurrency handling.
+- **Cloud Infrastructure Ready:** Fully containerized via Docker for easy deployment and CI/CD integration.
+- **Modern UI/UX:** Responsive, fast, and accessible frontends built with modern React frameworks and Tailwind CSS.
 
-## ✨ Key Features (Version 1.1)
+## 📚 Documentation
 
-- **Cloud Media Storage:** Direct integration with **AWS S3** for secure, time-limited digital product downloads (Signed URLs) and **Cloudinary** for highly optimized image delivery.
-- **Background Processing:** Implemented **Redis + BullMQ** to offload heavy tasks like sending emails (invoices, password resets) to background workers, ensuring blazing fast API response times.
-- **Enterprise-Grade Payments:** Stripe and VNPay integrations with advanced Webhook validation and row-level locking (concurrency control) to prevent race-condition exploits.
-- **Robust Backend Core:** RESTful APIs built with Node.js & Express, utilizing Prisma ORM for type-safe database interactions with PostgreSQL.
-- **Advanced Authentication:** Secure JWT-based auth system with Role-Based Access Control (RBAC) separating Customers and Admins.
-- **Containerized Ecosystem:** Docker Compose configuration orchestrating the entire stack (Node.js, PostgreSQL, Redis) for unified deployments.
-
----
+For a deep dive into the architecture, deployment instructions, and API references, please review the **[Documentation Folder (`/docs`)](./docs)**.
+- [System Architecture](./docs/architecture.md)
+- [Deployment Guide](./docs/docker.md)
+- [Environment Variables Config](./docs/environment.md)
+- [Changelog](./docs/changelog.md)
 
 ## 🚀 Getting Started (Docker Compose)
 
 The entire ecosystem is fully containerized. You can spin up the development or production environment with a single command.
 
 ### Prerequisites
-
 - [Docker](https://www.docker.com/products/docker-desktop) and Docker Compose installed.
-- Cloud accounts configured (AWS, Cloudinary, Stripe) if running in Production mode.
 
 ### Installation
 
 1. **Clone the repository:**
-
    ```bash
    git clone https://github.com/dangtienvn/e-cormmerce-platform.git
-   cd e-cormmerce-platform
+   cd creator-commerce-platform
    ```
 
 2. **Environment Setup:**
-   Duplicate the `.env.example` files in each application to `.env` and fill in the necessary database and cloud credentials (Refer to `docs/08-deployment/environment.md`).
-3. **Spin up the Ecosystem:**
-   Use the provided Docker Compose configuration to start all services, databases, and message queues:
+   Duplicate the `.env.example` files in each application to `.env` and configure your database and third-party credentials.
 
+3. **Spin up the Ecosystem:**
+   Start all microservices, databases, and message queues simultaneously:
    ```bash
    docker-compose up -d --build
    ```
 
 4. **Access the Applications:**
-   - Digital Store: `http://localhost:3002`
+   - Storefront Web: `http://localhost:3002`
    - Blog CMS: `http://localhost:3003`
-   - CRM System: `http://localhost:3001`
+   - Creator Portal: `http://localhost:3001`
    - Backend API: `http://localhost:5000`
 
 ---
