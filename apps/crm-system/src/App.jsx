@@ -1,16 +1,25 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
+import { AuthProvider } from './context/AuthContext';
 import AdminLayout from './layouts/AdminLayout';
-import Products from './pages/Products';
-import Orders from './pages/Orders';
-import Customers from './pages/Customers';
-import Dashboard from './pages/Dashboard';
-import Profile from './pages/Profile';
-import Reports from './pages/Reports';
-import Categories from './pages/Categories';
-import Posts from './pages/Posts';
-import Settings from './pages/Settings';
+import Products from './pages/creator/Products';
+import Orders from './pages/creator/Orders';
+import Customers from './pages/creator/Customers';
+import Dashboard from './pages/creator/Dashboard';
+import Profile from './pages/creator/Profile';
+import Reports from './pages/creator/Reports';
+import Categories from './pages/creator/Categories';
+import Posts from './pages/creator/Posts';
+import Settings from './pages/creator/Settings';
+
+// Admin Pages
+import TenantManagement from './pages/admin/TenantManagement';
+import ProductModeration from './pages/admin/ProductModeration';
+import Payouts from './pages/admin/Payouts';
+import PlatformAnalytics from './pages/admin/PlatformAnalytics';
+import GlobalSettings from './pages/admin/GlobalSettings';
+
 import AuthGuard from './components/AuthGuard';
 import ErrorBoundary from './components/ErrorBoundary';
 
@@ -18,87 +27,7 @@ import api from './lib/api';
 import toast from 'react-hot-toast';
 import socket from './lib/socket';
 
-const Login = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-    
-    setError('');
-    setLoading(true);
-    try {
-      const response = await api.post('/auth/login', { email, password });
-      if (response.success && response.token) {
-        localStorage.setItem('token', response.token);
-        window.location.href = '/';
-      } else {
-        setError(response.message || 'Đăng nhập thất bại.');
-      }
-    } catch (err) {
-      setError(err.response?.data?.message || 'Đã xảy ra lỗi trong quá trình đăng nhập.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50">
-      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-slate-100">
-        <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-blue-700">CRM<span className="text-slate-800">System</span></h1>
-          <p className="text-slate-500 mt-2">Chào mừng trở lại! Vui lòng đăng nhập vào tài khoản của bạn.</p>
-        </div>
-
-        {error && (
-          <div className="bg-red-50 text-red-500 p-4 rounded-lg mb-6 text-sm text-center">
-            {error}
-          </div>
-        )}
-
-        <form onSubmit={handleLogin}>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
-            <input name="email" type="email" className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none" />
-          </div>
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-slate-700 mb-1">Password</label>
-            <div className="relative">
-              <input 
-                name="password" 
-                type={showPassword ? "text" : "password"} 
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none pr-10" 
-              />
-              <button 
-                type="button" 
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-              </button>
-            </div>
-          </div>
-          <button 
-            type="submit" 
-            disabled={loading}
-            className="w-full bg-blue-600 text-white font-bold py-2.5 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-70"
-          >
-            {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
-          </button>
-        </form>
-      </div>
-    </div>
-  );
-};
-
-const Placeholder = ({ title }) => (
-  <div className="bg-white p-8 rounded-xl shadow-sm border border-slate-100 flex items-center justify-center h-64">
-    <h2 className="text-xl text-slate-500 font-medium">{title} Module - Coming Soon</h2>
-  </div>
-);
+import Login from './pages/auth/Login';
 
 function App() {
   useEffect(() => {
@@ -125,27 +54,45 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        
-        <Route path="/" element={
-          <AuthGuard allowedRoles={['admin', 'editor', 'sale']}>
-            <ErrorBoundary>
-              <AdminLayout />
-            </ErrorBoundary>
-          </AuthGuard>
-        }>
-          <Route index element={<Dashboard />} />
-          <Route path="orders" element={<Orders />} />
-          <Route path="products" element={<Products />} />
-          <Route path="posts" element={<Posts />} />
-          <Route path="categories" element={<Categories />} />
-          <Route path="customers" element={<AuthGuard allowedRoles={['admin', 'sale']}><Customers /></AuthGuard>} />
-          <Route path="reports" element={<AuthGuard allowedRoles={['admin']}><Reports /></AuthGuard>} />
-          <Route path="settings" element={<AuthGuard allowedRoles={['admin']}><Settings /></AuthGuard>} />
-          <Route path="profile" element={<Profile />} />
-        </Route>
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          
+          {/* Admin Routes */}
+          <Route path="/admin" element={
+            <AuthGuard allowedRoles={['super_admin']}>
+              <ErrorBoundary>
+                <AdminLayout />
+              </ErrorBoundary>
+            </AuthGuard>
+          }>
+            <Route path="creators" element={<TenantManagement />} />
+            <Route path="moderation" element={<ProductModeration />} />
+            <Route path="payouts" element={<Payouts />} />
+            <Route path="analytics" element={<PlatformAnalytics />} />
+            <Route path="settings" element={<GlobalSettings />} />
+          </Route>
+
+          {/* Creator Routes */}
+          <Route path="/" element={
+            <AuthGuard allowedRoles={['creator']}>
+              <ErrorBoundary>
+                <AdminLayout />
+              </ErrorBoundary>
+            </AuthGuard>
+          }>
+            <Route index element={<Dashboard />} />
+            <Route path="orders" element={<Orders />} />
+            <Route path="products" element={<Products />} />
+            <Route path="posts" element={<Posts />} />
+            <Route path="categories" element={<Categories />} />
+            <Route path="customers" element={<Customers />} />
+            <Route path="reports" element={<Reports />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="profile" element={<Profile />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

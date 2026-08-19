@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Bell, Search, User, Menu, X, Check, Settings, LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import api from '../lib/api';
+import { useAuth } from '../context/AuthContext';
 
 export default function Header({ sidebarOpen, toggleSidebar }) {
   const [notifications, setNotifications] = useState([]);
@@ -10,6 +11,7 @@ export default function Header({ sidebarOpen, toggleSidebar }) {
   const notifRef = useRef(null);
   const profileRef = useRef(null);
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     fetchNotifications();
@@ -122,17 +124,17 @@ export default function Header({ sidebarOpen, toggleSidebar }) {
             onClick={() => setShowProfileMenu(!showProfileMenu)}
             className="flex items-center space-x-3 hover:bg-slate-50 rounded-lg p-1 pr-2 transition-colors"
           >
-            <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm">
-              AD
+            <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm uppercase">
+              {user?.full_name?.substring(0, 2) || 'AD'}
             </div>
-            <span className="text-sm font-medium text-slate-700 hidden sm:block">Admin User</span>
+            <span className="text-sm font-medium text-slate-700 hidden sm:block">{user?.full_name || 'User'}</span>
           </button>
           
           {showProfileMenu && (
             <div className="absolute right-0 mt-2 w-48 glass-panel rounded-xl overflow-hidden z-50 transform origin-top-right transition-all animate-in fade-in zoom-in duration-200">
               <div className="p-3 border-b border-slate-100">
-                <p className="text-sm font-bold text-slate-800">Admin User</p>
-                <p className="text-xs text-slate-500">admin@example.com</p>
+                <p className="text-sm font-bold text-slate-800">{user?.full_name || 'User'}</p>
+                <p className="text-xs text-slate-500 truncate">{user?.email || 'email@example.com'}</p>
               </div>
               <div className="p-1">
                 <button onClick={() => { setShowProfileMenu(false); navigate('/profile'); }} className="w-full text-left px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 rounded-lg flex items-center">
