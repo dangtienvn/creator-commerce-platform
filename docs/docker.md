@@ -14,9 +14,9 @@ Hệ thống được gói gọn vào 5 services (Containers) chính hoạt đ�
 2. `redis`: Chạy **Redis 7** để làm Message Queue (BullMQ) cho hệ thống gửi Email. (Cổng 6379)
 3. `backend`: Chạy **Node.js Express**. (Cổng 5000)
 4. `frontend`: Chạy **CRM System** (Quản trị Admin). (Cổng 3001)
-5. `digital-store`: Chạy **Digital Store Next.js** (Cửa hàng khách hàng). (Cổng 3002)
+5. `storefront`: Chạy **Storefront Next.js** (Cửa hàng khách hàng). (Cổng 3002)
 
-*(Lưu ý: `blog-cms` đang chạy ở cổng 3003 nếu được kích hoạt).*
+
 
 ## Các Bước Triển Khai (Deploy)
 

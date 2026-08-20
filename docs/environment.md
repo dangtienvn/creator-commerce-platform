@@ -42,7 +42,7 @@ Hệ thống yêu cầu các cấu hình biến môi trường khác nhau giữa
 Giao diện quản trị Admin/Staff.
 - `VITE_API_URL`: Trỏ về đường dẫn Backend. Ví dụ: `http://localhost:5000/api` hoặc `https://api.my-domain.com/api`.
 
-### Digital Store (`apps/digital-store/.env`) & Blog CMS (`apps/blog-cms/.env`)
+### Storefront (`apps/storefront/.env`)
 Giao diện khách hàng và Blog SEO.
 - `NEXT_PUBLIC_API_URL`: Trỏ về Backend. Ví dụ: `http://localhost:5000/api`.
 
