@@ -2,10 +2,10 @@
   <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=Creator%20Commerce%20Platform&fontSize=50&fontAlignY=38&desc=Digital%20Product%20Commerce%20Ecosystem&descAlignY=60&descAlign=60" width="100%" />
 
   <p>
-    <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js-black?style=for-the-badge&amp;logo=next.js&amp;logoColor=white" alt="Next.js" /></a>
+    <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js" /></a>
     <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" /></a>
-    <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&amp;logo=nodedotjs&amp;logoColor=white" alt="Node.js" /></a>
-    <a href="https://expressjs.com/"><img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&amp;logo=express&amp;logoColor=white" alt="Express.js" /></a>
+    <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" /></a>
+    <a href="https://expressjs.com/"><img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express.js" /></a>
     <a href="https://www.prisma.io/"><img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma" /></a>
     <a href="https://www.postgresql.org/"><img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" /></a>
     <a href="https://redis.io/"><img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white" alt="Redis" /></a>
@@ -100,15 +100,15 @@ graph TD
 
 All applications reside within the `apps/` directory, while shared resources and configurations are managed in `packages/`.
 
-### 1. [Backend Core API (`apps/backend-core`)](./apps/backend-core)
+### 1. [Backend Core API](apps/backend-core)
 - **Role:** The engine of the platform. It handles business logic, automated digital product distribution & entitlements, secure authentication (RBAC), and payment webhook processing.
 - **Tech Stack:** Node.js, Express.js, PostgreSQL, Redis.
 
-### 2. [Storefront Web (`apps/storefront`)](./apps/storefront)
+### 2. [Storefront Web](apps/storefront)
 - **Role:** The customer-facing application. Supports multi-tenant routing (subdomains) and is optimized for SEO, speed, and providing a frictionless checkout experience for purchasing digital products.
 - **Tech Stack:** Next.js (App Router), React, Tailwind CSS.
 
-### 3. [Creator / Admin Portal (`apps/crm-system`)](./apps/crm-system)
+### 3. [Creator / Admin Portal](apps/crm-system)
 - **Role:** The internal dashboard for creators and admins. Features robust tools to manage the digital product lifecycle (create, update, archive), track orders, view customer data, and analyze post-launch revenue.
 - **Tech Stack:** React, Vite, Tailwind CSS, React Query.
 
@@ -131,6 +131,7 @@ For a deep dive into the architecture, deployment instructions, and API referenc
 - [System Architecture](./docs/architecture.md)
 - [Deployment Guide](./docs/docker.md)
 - [Environment Variables Config](./docs/environment.md)
+- [Troubleshooting Guide](./docs/troubleshooting.md)
 - [Changelog](./docs/changelog.md)
 
 ## 🚀 Getting Started (Docker Compose)
@@ -144,7 +145,7 @@ The entire ecosystem is fully containerized. You can spin up the development or 
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/dangtienvn/e-cormmerce-platform.git
+   git clone https://github.com/dangtienvn/creator-commerce-platform.git
    cd creator-commerce-platform
    ```
 

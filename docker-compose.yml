@@ -65,31 +65,15 @@ services:
     networks:
       - crm_network
 
-  digital-store:
+  storefront:
     build:
-      context: ./apps/digital-store
+      context: ./apps/storefront
       args:
         - NEXT_PUBLIC_API_URL=http://localhost:5000/api
     restart: always
     ports:
       - "3002:3000"
     depends_on:
-      - backend
-    networks:
-      - crm_network
-
-  blog-cms:
-    build:
-      context: ./apps/blog-cms
-      args:
-        - NEXT_PUBLIC_API_URL=http://localhost:5000/api
-    restart: always
-    ports:
-      - "3003:3000"
-    environment:
-      - DATABASE_URL=postgresql://postgres:rootpassword@db:5432/ecom_crm?schema=public
-    depends_on:
-      - db
       - backend
     networks:
       - crm_network
