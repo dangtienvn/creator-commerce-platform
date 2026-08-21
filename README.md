@@ -52,31 +52,31 @@ The project leverages a **Monorepo** structure, ensuring type safety and shared 
 
 ```mermaid
 graph TD
-    User((Customers / Guests))
-    Creator((Creators / Admins))
+    User(("Customers / Guests"))
+    Creator(("Creators / Admins"))
 
-    subgraph Frontend Applications
-        Store[Storefront Web<br/>Next.js]
-        CRM[Admin/Creator Portal<br/>React/Vite]
+    subgraph "Frontend Applications"
+        Store["Storefront Web<br/>Next.js"]
+        CRM["Admin/Creator Portal<br/>React/Vite"]
     end
     
-    subgraph Shared Packages
-        DB_PKG[@repo/database]
-        UI_PKG[@repo/ui]
+    subgraph "Shared Packages"
+        DB_PKG["@repo/database"]
+        UI_PKG["@repo/ui"]
     end
 
-    subgraph Backend Core
-        API[Backend Core API<br/>Node.js / Express]
-        Queue[Background Jobs<br/>Redis Worker]
+    subgraph "Backend Core"
+        API["Backend Core API<br/>Node.js / Express"]
+        Queue["Background Jobs<br/>Redis Worker"]
     end
 
-    subgraph Databases & Infrastructure
-        Postgres[(PostgreSQL<br/>Core DB)]
-        RedisCache[(Redis<br/>Cache & Queue)]
+    subgraph "Databases & Infrastructure"
+        Postgres[("PostgreSQL<br/>Core DB")]
+        RedisCache[("Redis<br/>Cache & Queue")]
     end
     
-    subgraph Third-Party Integrations
-        Pay[Payment Gateways<br/>Stripe / VNPay]
+    subgraph "Third-Party Integrations"
+        Pay["Payment Gateways<br/>Stripe / VNPay"]
     end
 
     User -->|Browse & Purchase| Store

@@ -8,31 +8,31 @@ Hệ thống bao gồm **2 ứng dụng Frontend** và **1 ứng dụng Backend*
 
 ```mermaid
 flowchart TD
-    subgraph Frontend Applications
-        DS[Storefront - Next.js\nCửa hàng cho khách & Tenant]
-        CRM[CRM System - React/Vite\nHệ thống quản trị nội bộ]
+    subgraph "Frontend Applications"
+        DS["Storefront - Next.js<br/>Cửa hàng cho khách & Tenant"]
+        CRM["CRM System - React/Vite<br/>Hệ thống quản trị nội bộ"]
     end
 
-    subgraph Shared Packages
-        DB_PKG[@repo/database\nPrisma Schema & Client]
-        UI_PKG[@repo/ui\nShared Components]
+    subgraph "Shared Packages"
+        DB_PKG["@repo/database<br/>Prisma Schema & Client"]
+        UI_PKG["@repo/ui<br/>Shared Components"]
     end
 
-    subgraph Backend Core
-        API[Node.js + Express API\nHandles Business Logic]
-        Queue[BullMQ Worker\nBackground Jobs]
+    subgraph "Backend Core"
+        API["Node.js + Express API<br/>Handles Business Logic"]
+        Queue["BullMQ Worker<br/>Background Jobs"]
     end
 
-    subgraph Databases
-        PG[(PostgreSQL\nPrimary Database)]
-        REDIS[(Redis\nMessage Queue & Cache)]
+    subgraph "Databases"
+        PG[("PostgreSQL<br/>Primary Database")]
+        REDIS[("Redis<br/>Message Queue & Cache")]
     end
 
-    subgraph External Services
-        S3[AWS S3\nSecure Ebooks/Video]
-        CLD[Cloudinary\nPublic Images CDN]
-        SMTP[Nodemailer/SMTP\nEmail Service]
-        PAY[Stripe / VNPay\nPayment Gateways]
+    subgraph "External Services"
+        S3["AWS S3<br/>Secure Ebooks/Video"]
+        CLD["Cloudinary<br/>Public Images CDN"]
+        SMTP["Nodemailer/SMTP<br/>Email Service"]
+        PAY["Stripe / VNPay<br/>Payment Gateways"]
     end
 
     %% Tương tác
