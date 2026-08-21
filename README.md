@@ -57,8 +57,12 @@ graph TD
 
     subgraph Frontend Applications
         Store[Storefront Web<br/>Next.js]
-        Blog[Blog CMS<br/>Next.js]
-        CRM[Admin/Creator Portal<br/>React/Tailwind]
+        CRM[Admin/Creator Portal<br/>React/Vite]
+    end
+    
+    subgraph Shared Packages
+        DB_PKG[@repo/database]
+        UI_PKG[@repo/ui]
     end
 
     subgraph Backend Core
@@ -76,14 +80,16 @@ graph TD
     end
 
     User -->|Browse & Purchase| Store
-    User -->|Read Content| Blog
     Creator -->|Manage Products, Lifecycle & Revenue| CRM
 
     Store -->|REST API| API
-    Blog -->|REST API| API
     CRM -->|REST API| API
+    
+    Store -.->|Use| UI_PKG
+    CRM -.->|Use| UI_PKG
+    API -.->|Use| DB_PKG
 
-    API -->|Read/Write Data| Postgres
+    DB_PKG -->|Read/Write Data| Postgres
     API -->|Enqueue Task| RedisCache
     Queue -->|Process Task| RedisCache
     
@@ -95,20 +101,20 @@ graph TD
 All applications reside within the `apps/` directory, while shared resources and configurations are managed in `packages/`.
 
 ### 1. [Backend Core API (`apps/backend-core`)](./apps/backend-core)
-- **Role:** The engine of the platform. It handles business logic, automated digital product distribution & entitlements, secure authentication (RBAC), database transactions, and payment webhook processing.
-- **Tech Stack:** Node.js, TypeScript, Express.js, Prisma ORM, PostgreSQL, Redis.
+- **Role:** The engine of the platform. It handles business logic, automated digital product distribution & entitlements, secure authentication (RBAC), and payment webhook processing.
+- **Tech Stack:** Node.js, Express.js, PostgreSQL, Redis.
 
-### 2. [Storefront Web (`apps/digital-store`)](./apps/digital-store)
-- **Role:** The customer-facing application. Optimized for SEO, speed, and providing a frictionless checkout experience for purchasing digital products.
-- **Tech Stack:** Next.js, React, Tailwind CSS.
+### 2. [Storefront Web (`apps/storefront`)](./apps/storefront)
+- **Role:** The customer-facing application. Supports multi-tenant routing (subdomains) and is optimized for SEO, speed, and providing a frictionless checkout experience for purchasing digital products.
+- **Tech Stack:** Next.js (App Router), React, Tailwind CSS.
 
 ### 3. [Creator / Admin Portal (`apps/crm-system`)](./apps/crm-system)
 - **Role:** The internal dashboard for creators and admins. Features robust tools to manage the digital product lifecycle (create, update, archive), track orders, view customer data, and analyze post-launch revenue.
-- **Tech Stack:** React, Tailwind CSS.
+- **Tech Stack:** React, Vite, Tailwind CSS, React Query.
 
-### 4. [Blog & CMS (`apps/blog-cms`)](./apps/blog-cms)
-- **Role:** A content management system integrated to drive organic traffic, market products, and share creator insights.
-- **Tech Stack:** Next.js, Tailwind CSS, PostgreSQL.
+### 4. Shared Packages (`packages/`)
+- **Role:** Reusable code modules synced via NPM Workspaces to ensure DRY principles.
+- **Components:** `@repo/database` (Prisma schema & client), `@repo/ui` (Shared React components), `@repo/theme-engine`, `@repo/types`, `@repo/eslint-config`, and `@repo/tsconfig`.
 
 ## ✨ Key Features
 
@@ -153,7 +159,6 @@ The entire ecosystem is fully containerized. You can spin up the development or 
 
 4. **Access the Applications:**
    - Storefront Web: `http://localhost:3002`
-   - Blog CMS: `http://localhost:3003`
    - Creator Portal: `http://localhost:3001`
    - Backend API: `http://localhost:5000`
 

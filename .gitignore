@@ -129,3 +129,6 @@ docker-compose.override.yml
 
 # Scripts
 scripts/
+
+# gitattributes
+.gitattributes
